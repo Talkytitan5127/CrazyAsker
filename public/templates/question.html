@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}
+	Вопрос
+{%  endblock %}
+{% block content %}
+	{% include 'primitives/one_question.html' %}
+	{% if answers %}
+		<div class="list-group">
+			{% for asnwer in answers %}
+				<div class="list-group-item">
+					{% include 'primitives/one_answer.html' %}
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p>
+		No Answers
+		</p>
+	{% endif %}
+	<div class="form-group send-answer">
+		<input type="text" class="form-control" id="AnswerInput" placeholder="Enter your answer here..">
+		<button class="btn btn-primary">Answer</button>
+	</div>
+{% endblock %}

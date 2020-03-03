@@ -1,0 +1,32 @@
+{% load static %}
+
+<div class="container-sm">
+    <div class="row">
+        <div class="col-3">
+            <div class="rounded-circle avatar">
+                <img src="{% static 'img/face.svg' %}" alt="Avatar">
+            </div>
+            <div class="rating">
+                <div class="vote-btn dec">
+                    <button><img src="{% static 'img/left-arrow.svg' %}" alt="Минус"></button>
+                </div>
+                <span>{{ rating }}</span>
+                <div class="vote-btn inc">
+                    <button><img src="{% static 'img/right-arrow.svg' %}" alt="Плюс"></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <h1>{{ header }}</h1>
+            <p>{{ body }}</p>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-3">
+    </div>
+    <div class="col-9">
+        {% block bottom-model %}
+        {% endblock %}
+    </div>
+    </div>
+</div>

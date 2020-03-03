@@ -1,0 +1,14 @@
+{% extends 'primitives/base_model.html' %}
+
+<div class="question">
+    {% block bottom-model %}
+        <p>Tags:</p>
+        <ul class="list-group list-group-horizontal">
+            {% for tag in tags %}
+            <li class="list-group-item">
+                {{ tag }}
+            </li>
+            {% endfor %}
+        </ul>
+    {% endblock %}
+</div>

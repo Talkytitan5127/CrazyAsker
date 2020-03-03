@@ -1,0 +1,41 @@
+{% load static %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{%  static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+    <body class="body">
+        <header class="header container">
+            <div class="row">
+                <div class="col-3 site_name">What"s Uup?</div>
+                <div class="col-5 search">Ask questions</div>
+                <div class="col user_blog">User Content</div>
+            </div>
+        </header>
+        <main class="container main">
+            <div class="row">
+                <div class="col-md-8 content-main">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+                <!-- content-main -->
+                <aside class="col-md-4 sight-bar">
+                    <div class="p-4 mb-3 tags">Popular Tags</div>
+                    <div class="p-4 members">Best Members</div>
+                </aside>
+                <!-- right_bar-main -->
+            </div>
+        </main>
+        <footer class="footer">
+            <p>
+                Blog template was built by
+                <a href="https://github.com/TalkyTitan5127">@TalkyTitan5127</a>
+            </p>
+            <p>
+                <a href="#">Back to top</a>
+            </p>
+        </footer>
+    </body>
+</html>
