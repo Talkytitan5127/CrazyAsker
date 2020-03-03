@@ -7,12 +7,21 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
     </head>
     <body class="body">
-        <header class="header container">
-            <div class="row">
-                <div class="col-3 site_name">What"s Uup?</div>
-                <div class="col-5 search">Ask questions</div>
-                <div class="col user_blog">User Content</div>
-            </div>
+        <header class="header bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light container h-100">
+                <a class="navbar-brand col-3" href="#">CrazyAsker</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <form class="form-inline my-2 my-lg-0 col-5">
+                    <input class="form-control mr-sm-2" type="search" placeholder="type question" aria-label="Search">
+                    <button class="btn btn-outline-primary   my-2 my-sm-0" type="submit">Asker</button>
+                </form>
+                <div class="col-3">
+                    <p class="text-center m-0">AVATAR</p>
+                </div>
+            </nav>
         </header>
         <main class="container main">
             <div class="row">
