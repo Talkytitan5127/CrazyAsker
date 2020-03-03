@@ -1,0 +1,28 @@
+{% load static %}
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{%  static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    </head>
+    <body class="text-center login-body">
+        <form class="form-signin">
+            <h1 class="mb-3">Log In</h1>
+            <label for="inputEmail" class="sr-only"></label>
+            <input type="email" id="inputEmail" class="form-control mb-3" placeholder="email address" required autofocus>
+            <label for="inputPassword" class="sr-only"></label>
+            <input type="password" id="inputPassword" class="form-control mb-3" placeholder="password" required>
+            <div class="checkbox mb-3">
+                <label>
+                  <input type="checkbox" value="remember-me"> Remember me
+                </label>
+            </div>
+            <div class="row">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                <a href="{% url 'signup' %}" role="button" class="btn btn-lg btn-primary btn-block">Register in</a>
+            </div>
+        </form>
+    </body>
+</html>
+
