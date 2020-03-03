@@ -40,9 +40,17 @@
                         <input type="password" class="form-control col-sm-6 mb-4" id="repeat_password">
                     </div>
                 </div>
+
+                <div class="custom-file w-50">
+                    <input type="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
             </div>
              <button class="btn btn-primary m-4" type="submit">Submit form</button>
         </form>
     </body>
 </html>
-
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+<script>
+      bsCustomFileInput.init();
+</script>
