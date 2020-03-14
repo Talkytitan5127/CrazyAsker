@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 
 
@@ -105,3 +107,10 @@ def signup(request):
 
 def one_quest(request):
     return render(request, 'primitives/one_question.html')
+
+
+def paginate(objects_list, request, count_per_page):
+    paginator = Paginator(objects_list, count_per_page)
+    page = request.GET.page('page')
+    result_list = paginator.get_page(page)
+    return result_list
