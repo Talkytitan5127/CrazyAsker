@@ -108,6 +108,9 @@ def signup(request):
 def one_quest(request):
     return render(request, 'primitives/one_question.html')
 
+def settings(request):
+    return render(request, 'settings.html')
+
 
 def paginate(objects_list, request, count_per_page):
     paginator = Paginator(objects_list, count_per_page)
