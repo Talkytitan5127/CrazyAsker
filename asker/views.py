@@ -3,7 +3,34 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, 'index.html')
+    questions = [
+        {
+            'header': 'Сколько часов займет у меня долбанная верстка страниц??',
+            'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
+            'author': 'developer',
+            'create_data': datetime.now(),
+            'tags': ['боль', 'coding'],
+            'rating': 100,
+        },
+        {
+            'header': 'Сколько часов займет у меня долбанная верстка страниц??',
+            'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
+            'author': 'developer',
+            'create_data': datetime.now(),
+            'tags': ['боль', 'coding'],
+            'rating': 100,
+        },
+        {
+            'header': 'Сколько часов займет у меня долбанная верстка страниц??',
+            'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
+            'author': 'developer',
+            'create_data': datetime.now(),
+            'tags': ['боль', 'coding'],
+            'rating': 100,
+        }
+
+    ]
+    return render(request, 'index.html', {'questions': questions})
 
 
 def hot(request):
@@ -23,7 +50,17 @@ def question(request, question_id):
         'tags': ['боль', 'coding'],
         'rating': 100,
     }
-    return render(request, 'question.html', question)
+    answer = {
+        'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
+        'author': 'developer',
+        'create_data': datetime.now(),
+        'tags': ['боль', 'coding'],
+        'rating': 100,
+    }
+    return render(request, 'question.html', {
+        'object' : question,
+        'answers': [answer]
+    })
 
 
 def ask(request):
@@ -36,3 +73,6 @@ def login(request):
 
 def signup(request):
     return render(request, 'register.html')
+
+def one_quest(request):
+    return render(request, 'primitives/one_question.html')

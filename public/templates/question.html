@@ -4,21 +4,22 @@
 {%  endblock %}
 {% block content %}
 	{% include 'primitives/one_question.html' %}
-	{% if answers %}
-		<div class="list-group">
-			{% for asnwer in answers %}
-				<div class="list-group-item">
-					{% include 'primitives/one_answer.html' %}
-				</div>
-			{% endfor %}
-		</div>
-	{% else %}
-		<p>
-		No Answers
-		</p>
-	{% endif %}
-	<div class="form-group send-answer">
-		<input type="text" class="form-control" id="AnswerInput" placeholder="Enter your answer here..">
+    <div class="list-group mb-3">
+        {% if answers %}
+            {% for object in answers %}
+                <div class="list-group-item">
+                    {% include 'primitives/one_answer.html' %}
+                </div>
+            {% endfor %}
+	    {% else %}
+            <div class="list-group-item border-warning text-center">
+                <p>No Answers yet</p>
+            </div>
+	    {% endif %}
+    </div>
+	<div class="form-group send-text">
+        <textarea type="text" class="form-control mb-3" id="AnswerInput" placeholder="Enter your answer here..">
+        </textarea>
 		<button class="btn btn-primary">Answer</button>
 	</div>
 {% endblock %}

@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{%  extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h3 class="col-sm-4">New Questions</h3>
+        <h5 class="col-sm-4 text-center">Hot questions</h5>
+    </div>
+    <ul class="list-group">
+        {% for object in questions %}
+            {% include 'primitives/one_question.html' %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

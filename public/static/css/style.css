@@ -25,9 +25,30 @@
 }
 
 .avatar img{
-	width: 64px; height: 64px;
+	width: 100%; height: 100%;
 }
 
 .vote-btn img {
 	width: 32px; height: 32px;
+}
+
+.rating {
+    margin: auto;
+    font-size: 10px;
+    width: 100%; height:100%;
+    fill: currentColor;
+    text-align: center;
+    padding: 0;
+}
+
+#top-row {
+    height: 230px;
+}
+
+.send-text textarea {
+    height: 150px;
+}
+
+.ask input[id=text] {
+    height: 150px;
 }

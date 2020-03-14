@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+	<div class="container">
+		<h2>Задайте Вопрос</h2>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label" for="title">Title</label>
+			<div class="col-sm-10">
+				<input type="text" id="title" class="form-control">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label" for="text">Text</label>
+			<div class="col-sm-10 send-text">
+				<textarea type="text" id="text	" class="form-control align-baseline"></textarea>
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-sm-2 col-form-label" for="tags">Tags</label>
+			<div class="col-sm-10">
+				<input type="text" id="tags" class="form-control">
+			</div>
+		</div>
+		<div class="form-group row">
+			<div class="col-sm-2"></div>
+			<div class="col-sm-10">
+				<button type="submit" class="btn btn-primary">Ask?</button>
+			</div>
+		</div>
+	</div>
+{% endblock %}

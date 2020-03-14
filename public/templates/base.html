@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
     </head>
     <body class="body">
-        <header class="header bg-light">
+        <header class="header bg-light mb-3">
             <nav class="navbar navbar-expand-lg navbar-light container h-100">
                 <a class="navbar-brand col-3" href="#">CrazyAsker</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
                     <button class="btn btn-outline-primary   my-2 my-sm-0" type="submit">Asker</button>
                 </form>
                 <div class="col-3">
-                    <p class="text-center m-0">AVATAR</p>
+                    <p class="profile">{% include 'primitives/profile.html' %}</p>
                 </div>
             </nav>
         </header>
@@ -31,20 +31,25 @@
                 </div>
                 <!-- content-main -->
                 <aside class="col-md-4 sight-bar">
-                    <div class="p-4 mb-3 tags">Popular Tags</div>
-                    <div class="p-4 members">Best Members</div>
+                    <div class="p-4 mb-3 tags align-self-start">Popular Tags</div>
+                    <div class="p-4 members align-self-center">Best Members</div>
                 </aside>
                 <!-- right_bar-main -->
             </div>
         </main>
         <footer class="footer">
-            <p>
-                Blog template was built by
-                <a href="https://github.com/TalkyTitan5127">@TalkyTitan5127</a>
-            </p>
-            <p>
-                <a href="#">Back to top</a>
-            </p>
+            <div class="container">
+                <div class="row">
+
+                </div>
+                <p>
+                    Blog template was built by
+                    <a href="https://github.com/TalkyTitan5127">@TalkyTitan5127</a>
+                </p>
+                <p>
+                    <a href="#">Back to top</a>
+                </p>
+            </div>
         </footer>
     </body>
 </html>

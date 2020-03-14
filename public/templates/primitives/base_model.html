@@ -1,28 +1,33 @@
 {% load static %}
 
-<div class="container-sm">
-    <div class="row">
+<div class="container-sm border border-primary mb-3">
+    <div class="row p-2" id="top-row">
         <div class="col-3">
-            <div class="rounded-circle avatar">
+            <div class="rounded-circle avatar mx-auto">
                 <img src="{% static 'img/face.svg' %}" alt="Avatar">
             </div>
-            <div class="rating">
-                <div class="vote-btn dec">
-                    <button><img src="{% static 'img/left-arrow.svg' %}" alt="Минус"></button>
-                </div>
-                <span>{{ rating }}</span>
-                <div class="vote-btn inc">
-                    <button><img src="{% static 'img/right-arrow.svg' %}" alt="Плюс"></button>
-                </div>
-            </div>
+
         </div>
-        <div class="col-9">
-            <h1>{{ header }}</h1>
-            <p>{{ body }}</p>
+        <div class="col-9 pl-4">
+            <p class="h4 text-md-center">{{ object.header }}</p>
+            <p class="text-justify">{{ object.body }}</p>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-1" id="bottom-row">
     <div class="col-3">
+        <div class="text-center row p-2">
+            <div class="vote-btn dec col-sm-4 col-lg-4">
+                <svg class="bi bi-chevron-left rating" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M13.354 3.646a.5.5 0 010 .708L7.707 10l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z" clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <span class="col-sm-4">{{ object.rating }}</span>
+            <div class="vote-btn inc col-sm-4 col-lg-4">
+                <svg class="bi bi-chevron-right rating" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"></path>
+                </svg>
+            </div>
+        </div>
     </div>
     <div class="col-9">
         {% block bottom-model %}
