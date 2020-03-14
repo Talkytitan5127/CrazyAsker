@@ -35,7 +35,10 @@ def index(request):
     return render(request, 'index.html',
                   {
                       'questions': questions,
-                      'tags': ['aa', 'bb', 'cc', 'dd']
+                      'tags': ['aa', 'bb', 'cc', 'dd'],
+                      'user': {
+                          'is_authorized': True,
+                      }
                   })
 
 
