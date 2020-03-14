@@ -1,20 +1,56 @@
-{% extends 'primitives/base_model.html' %}
+{% load static %}
 
-{% block bottom-model %}
-<div class="question h-100">
-    <div class="row text-center h-100">
+<div class="container-sm p-3 border border-primary mb-3">
+    <div class="row mb-1" id="top-row">
         <div class="col-3">
-            <p>Tags:</p>
+            <div class="rounded-circle avatar mx-auto">
+                <img src="{% static 'img/face.svg' %}" alt="Avatar">
+            </div>
+
         </div>
-        <div class="col-9">
-          <ul class="list-group list-group-horizontal">
-            {% for tag in object.tags %}
-            <li class="badge badge-primary m-1" href="#">
-                {{ tag }}
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="col-9 pl-4">
+            <p class="h4 text-md-center">{{ question.header }}</p>
+            <p class="text-justify">{{ question.body }}</p>
         </div>
     </div>
+    <div class="row" id="bottom-row">
+    <div class="col-3">
+        <div class="text-center row p-2">
+            <div class="vote-btn dec col-sm-4 col-lg-4">
+                <svg class="bi bi-chevron-left rating" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M13.354 3.646a.5.5 0 010 .708L7.707 10l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z" clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <span class="col-sm-4">{{ question.rating }}</span>
+            <a class="vote-btn inc col-sm-4 col-lg-4">
+                <svg class="bi bi-chevron-right rating" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="question">
+            <div class="row text-center">
+                <div class="col-3">
+                    <p>Tags:</p>
+                </div>
+                <div class="col-9">
+                  <ul class="list-group list-group-horizontal">
+                    {% for tag in question.tags %}
+                    <a class="badge badge-primary m-1" href="#">
+                        {{  tag }}
+                    </a>
+                    {% endfor %}
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <a href="{% url 'question_index' question_id=1 %}">
+            <h5>Answers</h5>
+        </a>
+    </div>
+    </div>
 </div>
-{% endblock %}

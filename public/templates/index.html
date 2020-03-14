@@ -2,12 +2,19 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <h3 class="col-sm-4">New Questions</h3>
-        <h5 class="col-sm-4 text-center">Hot questions</h5>
+    {% if search_tag %}
+    <div class="row mb-1">
+        <h3 class="col-sm-4">Tag</h3>
+        <h3 class="col-sm-4">{{ search_tag }}</h3>
     </div>
-    <ul class="list-group">
-        {% for object in questions %}
+    {% else  %}
+    <div class="row mb-1">
+        <h3 class="col-sm-4">New Questions</h3>
+        <h3 class="col-sm-4">Hot questions</h3>
+    </div>
+    {% endif %}
+    <ul class="list-group questions">
+        {% for question in questions %}
             {% include 'primitives/one_question.html' %}
         {% endfor %}
     </ul>

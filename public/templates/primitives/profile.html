@@ -1,1 +1,22 @@
-<p>Profile</p>
+{%  load static %}
+{% if user.is_authorized %}
+<div class="container">
+	<div class="mr-3 avatar">
+		<div class="rounded-circle base mx-auto">
+			<img src="{% static 'img/face.svg' %}" alt="Avatar">
+		</div>
+	</div>
+	<div class="row">
+		<p>user.username</p>
+	</div>
+	<div class="row">
+		<a href="#">Settings</a>
+		<a href="#">Log out</a>
+	</div>
+</div>
+{% else %}
+<div class="row">
+	<a class="btn btn-primary mr-3" href="{% url 'login' %}">Login</a>
+	<a class="btn btn-primary" href="{% url 'signup' %}">Sign Up</a>
+</div>
+{% endif %}

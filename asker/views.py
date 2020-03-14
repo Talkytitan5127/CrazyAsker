@@ -30,7 +30,11 @@ def index(request):
         }
 
     ]
-    return render(request, 'index.html', {'questions': questions})
+    return render(request, 'index.html',
+                  {
+                      'questions': questions,
+                      'tags': ['aa', 'bb', 'cc', 'dd']
+                  })
 
 
 def hot(request):
@@ -38,7 +42,25 @@ def hot(request):
 
 
 def tag_filter(request, tag_name):
-    pass
+    questions = [
+        {
+            'header': 'Сколько часов займет у меня долбанная верстка страниц??',
+            'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
+            'author': 'developer',
+            'create_data': datetime.now(),
+            'tags': ['aa', 'coding'],
+            'rating': 100,
+        },
+        {
+            'header': 'Сколько часов займет у меня долбанная верстка страниц??',
+            'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
+            'author': 'developer',
+            'create_data': datetime.now(),
+            'tags': ['боль', 'aa'],
+            'rating': 100,
+        }
+    ]
+    return render(request, 'index.html', {'questions': questions, 'search_tag': tag_name})
 
 
 def question(request, question_id):
@@ -50,16 +72,23 @@ def question(request, question_id):
         'tags': ['боль', 'coding'],
         'rating': 100,
     }
-    answer = {
-        'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
-        'author': 'developer',
-        'create_data': datetime.now(),
-        'tags': ['боль', 'coding'],
-        'rating': 100,
-    }
+    answers = [
+        {
+            'body': 'Чувак забей это же вери изи',
+            'author': 'user',
+            'create_data': datetime.now(),
+            'rating': 100,
+        },
+        {
+            'body': 'gg wp',
+            'author': 'user',
+            'create_data': datetime.now(),
+            'rating': 100,
+        }
+    ]
     return render(request, 'question.html', {
-        'object' : question,
-        'answers': [answer]
+        'question': question,
+        'answers': answers
     })
 
 

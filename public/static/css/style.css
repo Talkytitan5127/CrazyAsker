@@ -52,3 +52,8 @@
 .ask input[id=text] {
     height: 150px;
 }
+
+.answer div.avatar {
+    height: 128px;
+    width: 128px;
+}

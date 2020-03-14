@@ -6,10 +6,8 @@
 	{% include 'primitives/one_question.html' %}
     <div class="list-group mb-3">
         {% if answers %}
-            {% for object in answers %}
-                <div class="list-group-item">
+            {% for answer in answers %}
                     {% include 'primitives/one_answer.html' %}
-                </div>
             {% endfor %}
 	    {% else %}
             <div class="list-group-item border-warning text-center">

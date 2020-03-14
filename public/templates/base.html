@@ -9,12 +9,12 @@
     <body class="body">
         <header class="header bg-light mb-3">
             <nav class="navbar navbar-expand-lg navbar-light container h-100">
-                <a class="navbar-brand col-3" href="#">CrazyAsker</a>
+                <a class="navbar-brand col-3" href="{% url 'index' %}">CrazyAsker</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <form class="form-inline my-2 my-lg-0 col-5">
+                <form class="form-inline my-2 my-lg-0 col-6">
                     <input class="form-control mr-sm-2" type="search" placeholder="type question" aria-label="Search">
                     <button class="btn btn-outline-primary   my-2 my-sm-0" type="submit">Asker</button>
                 </form>
@@ -30,9 +30,18 @@
                     {% endblock %}
                 </div>
                 <!-- content-main -->
-                <aside class="col-md-4 sight-bar">
-                    <div class="p-4 mb-3 tags align-self-start">Popular Tags</div>
-                    <div class="p-4 members align-self-center">Best Members</div>
+                <aside class="col-md-4 pl-5 sight-bar">
+                    <div class="p-4 mb-3 tags align-self-start">
+                        <h3>Popular Tags</h3>
+                        {% for tag in tags %}
+                        <a class="badge badge-primary m-1" href="{% url 'tag_filter' tag_name=tag %}">
+                            {{  tag }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    <div class="p-4 members align-self-center">
+                        <h3>Best Members</h3>
+                    </div>
                 </aside>
                 <!-- right_bar-main -->
             </div>
