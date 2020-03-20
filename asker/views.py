@@ -37,7 +37,7 @@ def index(request):
                       'questions': questions,
                       'tags': ['aa', 'bb', 'cc', 'dd'],
                       'user': {
-                          'is_authorized': True,
+                          'is_authorized': False,
                       }
                   })
 
