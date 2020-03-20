@@ -17,3 +17,9 @@
 * Верстка выполняется с использованием **Twitter Bootstrap**.
 * Взаимодействие интерфейса с пользователем обеспечивается **JavaScript/jQuery**.
 * Для авторизации и хранения пользователей можно использовать приложение **django.contrib.auth**.
+
+## Запуск сервера
+```
+source venv/bin/activate
+python manage.py runserver
+```
