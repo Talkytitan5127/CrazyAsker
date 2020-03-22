@@ -106,7 +106,7 @@ def login(request):
 
 
 def signup(request):
-    return render(request, 'register.html')
+    return render(request, 'signup.html')
 
 def one_quest(request):
     return render(request, 'primitives/one_question.html')

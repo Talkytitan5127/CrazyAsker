@@ -28,17 +28,19 @@
 	width: 100%; height: 100%;
 }
 
-.vote-btn img {
-	width: 32px; height: 32px;
+button.vote-btn {
+    background-color: white;
+    border: none;
 }
 
 .rating {
     margin: auto;
     font-size: 10px;
-    width: 100%; height:100%;
+    width: 32px; height:32px;
     fill: currentColor;
     text-align: center;
-    padding: 0;
+    align-items: center;
+    padding: 5px;
 }
 
 #top-row {
