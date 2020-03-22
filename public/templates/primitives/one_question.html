@@ -16,17 +16,17 @@
     <div class="row" id="bottom-row">
     <div class="col-3">
         <div class="text-center row p-2">
-            <div class="vote-btn dec col-sm-4 col-lg-4">
+            <button class="vote-btn dec col-sm-4 col-lg-4 p-0" data-toggle="tooltip">
                 <svg class="bi bi-chevron-left rating" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M13.354 3.646a.5.5 0 010 .708L7.707 10l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z" clip-rule="evenodd"></path>
                 </svg>
-            </div>
-            <span class="col-sm-4">{{ question.rating }}</span>
-            <a class="vote-btn inc col-sm-4 col-lg-4">
+            </button>
+            <span class="col-sm-4 p-1">{{ question.rating }}</span>
+            <button class="vote-btn inc col-sm-4 col-lg-4 p-0" data-toggle="tooltip">
                 <svg class="bi bi-chevron-right rating" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"></path>
                 </svg>
-            </a>
+            </button>
         </div>
     </div>
     <div class="col-6">
@@ -38,8 +38,8 @@
                 <div class="col-9">
                   <ul class="list-group list-group-horizontal">
                     {% for tag in question.tags %}
-                    <a class="badge badge-primary m-1" href="#">
-                        {{  tag }}
+                    <a class="badge badge-primary m-1" href="{% url 'tag_filter' tag_name=tag %}">
+                        {{ tag }}
                     </a>
                     {% endfor %}
                 </ul>
@@ -54,3 +54,9 @@
     </div>
     </div>
 </div>
+
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
