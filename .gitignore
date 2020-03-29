@@ -2,5 +2,6 @@
 __pycache__/*
 venv/*
 asker/*/__pycache__/*
+asker/__pycache__/*
 CrazyAsker/__pycache__/*
 media/*
