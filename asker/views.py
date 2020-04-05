@@ -1,41 +1,17 @@
 from datetime import datetime
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
+from .models import Question, Tag
 
 def index(request):
-    questions = [
-        {
-            'header': 'Сколько часов займет у меня долбанная верстка страниц??',
-            'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
-            'author': 'developer',
-            'create_data': datetime.now(),
-            'tags': ['боль', 'coding'],
-            'rating': 100,
-        },
-        {
-            'header': 'Сколько часов займет у меня долбанная верстка страниц??',
-            'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
-            'author': 'developer',
-            'create_data': datetime.now(),
-            'tags': ['боль', 'coding'],
-            'rating': 100,
-        },
-        {
-            'header': 'Сколько часов займет у меня долбанная верстка страниц??',
-            'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
-            'author': 'developer',
-            'create_data': datetime.now(),
-            'tags': ['боль', 'coding'],
-            'rating': 100,
-        }
-
-    ]
+    questions = Question.manager.order_by('updated_at').all()
+    page_obj = paginate(questions, request, 20)
     return render(request, 'index.html',
                   {
-                      'questions': questions,
-                      'tags': ['aa', 'bb', 'cc', 'dd'],
+                      'page_obj': page_obj,
+                      'popular_tags': ['aa', 'bb', 'cc', 'dd'],
                       'user': {
                           'is_authorized': False,
                       }
@@ -47,55 +23,21 @@ def hot(request):
 
 
 def tag_filter(request, tag_name):
-    questions = [
-        {
-            'header': 'Сколько часов займет у меня долбанная верстка страниц??',
-            'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
-            'author': 'developer',
-            'create_data': datetime.now(),
-            'tags': ['aa', 'coding'],
-            'rating': 100,
-        },
-        {
-            'header': 'Сколько часов займет у меня долбанная верстка страниц??',
-            'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
-            'author': 'developer',
-            'create_data': datetime.now(),
-            'tags': ['боль', 'aa'],
-            'rating': 100,
-        }
-    ]
-    return render(request, 'index.html', {'questions': questions, 'search_tag': tag_name})
+    tag = get_object_or_404(Tag, title=tag_name)
+    questions = tag.questions.all()
+    page_obj = paginate(questions, request, 20)
+    return render(request, 'index.html',
+                  {
+                      'page_obj': page_obj,
+                      'search_tag': tag_name
+                  })
 
 
 def question(request, question_id):
-    question = {
-        'header': 'Сколько часов займет у меня долбанная верстка страниц??',
-        'body': 'Я не знаю, я не ожидал такого, это очень интересно, но столько нюансов',
-        'author': 'developer',
-        'create_data': datetime.now(),
-        'tags': ['боль', 'coding'],
-        'rating': 100,
-    }
-    answers = [
-        {
-            'body': 'Чувак забей это же вери изи',
-            'author': 'user',
-            'create_data': datetime.now(),
-            'rating': 100,
-        },
-        {
-            'body': 'gg wp',
-            'author': 'user',
-            'create_data': datetime.now(),
-            'rating': 100,
-        }
-    ]
-    return render(request, 'question.html', {
-        'question': question,
-        'answers': answers
-    })
-
+    question = get_object_or_404(Question, pk=question_id)
+    answers = question.answer_set.all()
+    page_obj = paginate(answers, request, 20)
+    return render(request, 'question.html', {'question': question, 'page_obj': page_obj})
 
 def ask(request):
     return render(request, 'ask.html')
@@ -117,6 +59,10 @@ def settings(request):
 
 def paginate(objects_list, request, count_per_page):
     paginator = Paginator(objects_list, count_per_page)
-    page = request.GET.page('page')
+    page = request.GET.get('page', 1)
     result_list = paginator.get_page(page)
     return result_list
+
+
+def page_not_found(request, exception=None):
+    return render(request, '404.html', status=404)
