@@ -20,3 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('asker.urls')),
 ]
+
+handler404 = 'asker.views.page_not_found'
