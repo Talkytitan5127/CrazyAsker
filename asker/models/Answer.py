@@ -21,4 +21,7 @@ class Answer(models.Model):
         return self.text
 
     def rating(self):
-        return 50
+        return self.votes.likes().count() - self.votes.dislikes().count()
+
+    def author_name(self):
+        return self.author.username

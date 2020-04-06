@@ -1,13 +1,22 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.contenttypes.fields import GenericRelation
+from django.utils import timezone
+
+from datetime import timedelta
 
 from .LikeDislike import LikeDislike
 from .User import User
 
 
 class QuestionManager(models.Manager):
-    pass
+    def new_today(self):
+        last_day = timezone.now() - timedelta(1)
+        return self.get_queryset().filter(updated_at__gte=last_day)
+
+    def hot_today(self):
+        today_questions = self.new_today()
+        return sorted(today_questions, key=lambda elem: elem.rating(), reverse=True)
 
 
 class Question(models.Model):
@@ -25,4 +34,4 @@ class Question(models.Model):
         return self.title
 
     def rating(self):
-        return 100
+        return self.votes.likes().count() - self.votes.dislikes().count()
