@@ -4,7 +4,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('hot/', views.hot, name='best_questions'),
+    path('new/', views.new, name='new_questions'),
+    path('hot/', views.hot, name='hot_questions'),
     path('tag/<str:tag_name>/', views.tag_filter, name='tag_filter'),
     path('question/<int:question_id>/', views.question, name='question_index'),
     path('login/', views.login, name='login'),

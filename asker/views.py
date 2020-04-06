@@ -3,23 +3,48 @@ from datetime import datetime
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render, get_object_or_404
 
-from .models import Question, Tag
+from .models import Question, Tag, User
+
 
 def index(request):
-    questions = Question.manager.order_by('updated_at').all()
+    questions = Question.manager.order_by('-updated_at').all()
     page_obj = paginate(questions, request, 20)
     return render(request, 'index.html',
                   {
                       'page_obj': page_obj,
-                      'popular_tags': ['aa', 'bb', 'cc', 'dd'],
+                      'popular_tags': Tag.manager.popular_tags,
+                      'popular_users': User.manager.popular_users,
                       'user': {
                           'is_authorized': False,
                       }
                   })
 
 
+def new(request):
+    questions = Question.manager.new_today()
+    page_obj = paginate(questions, request, 20)
+    return render(request, 'index.html',
+                  {
+                      'page_obj': page_obj,
+                      'popular_tags': Tag.manager.popular_tags,
+                      'popular_users': User.manager.popular_users,
+                      'user': {
+                          'is_authorized': False,
+                      }
+                  })
+
 def hot(request):
-    pass
+    questions = Question.manager.hot_today()
+    page_obj = paginate(questions, request, 20)
+    return render(request, 'index.html',
+                  {
+                      'page_obj': page_obj,
+                      'popular_tags': Tag.manager.popular_tags,
+                      'popular_users': User.manager.popular_users,
+                      'user': {
+                          'is_authorized': False,
+                      }
+                  })
 
 
 def tag_filter(request, tag_name):
@@ -29,7 +54,9 @@ def tag_filter(request, tag_name):
     return render(request, 'index.html',
                   {
                       'page_obj': page_obj,
-                      'search_tag': tag_name
+                      'search_tag': tag_name,
+                      'popular_tags': Tag.manager.popular_tags,
+                      'popular_users': User.manager.popular_users,
                   })
 
 
@@ -37,7 +64,13 @@ def question(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     answers = question.answer_set.all()
     page_obj = paginate(answers, request, 20)
-    return render(request, 'question.html', {'question': question, 'page_obj': page_obj})
+    return render(request, 'question.html',
+                  {
+                      'question': question,
+                      'page_obj': page_obj,
+                      'popular_tags': Tag.manager.popular_tags,
+                      'popular_users': User.manager.popular_users,
+                  })
 
 def ask(request):
     return render(request, 'ask.html')
