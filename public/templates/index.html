@@ -9,12 +9,12 @@
     </div>
     {% else  %}
     <div class="row mb-1">
-        <a class="col-sm-4 h3" href="#">New Questions</a>
-        <a class="col-sm-4 h3" href="#">Hot questions</a>
+        <a class="col-sm-4 h3" href="{% url 'new_questions' %}">New Questions</a>
+        <a class="col-sm-4 h3" href="{% url 'hot_questions' %}">Hot questions</a>
     </div>
     {% endif %}
     <ul class="list-group questions">
-        {% for question in questions %}
+        {% for question in page_obj.object_list %}
             {% include 'primitives/one_question.html' %}
         {% endfor %}
     </ul>

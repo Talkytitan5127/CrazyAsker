@@ -5,8 +5,9 @@
 {% block content %}
 	{% include 'primitives/one_question.html' %}
     <div class="list-group mb-3">
-        {% if answers %}
-            {% for answer in answers %}
+        {% if page_obj.object_list %}
+            <h3>List of answers</h3>
+            {% for answer in page_obj.object_list %}
                     {% include 'primitives/one_answer.html' %}
             {% endfor %}
 	    {% else %}

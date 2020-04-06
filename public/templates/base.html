@@ -31,14 +31,19 @@
                 <aside class="col-md-4 pl-5 sight-bar">
                     <div class="p-4 mb-3 tags align-self-start">
                         <h3>Popular Tags</h3>
-                        {% for tag in tags %}
+                        {% for tag in popular_tags %}
                         <a class="badge badge-primary m-1" href="{% url 'tag_filter' tag_name=tag %}">
-                            {{  tag }}
+                            {{ tag.title }}
                         </a>
                         {% endfor %}
                     </div>
                     <div class="p-4 members align-self-center">
                         <h3>Best Members</h3>
+                        {% for user in popular_users %}
+                        <span class="badge badge-primary m-1">
+                            {{ user.username }}
+                        </span>
+                        {% endfor %}
                     </div>
                 </aside>
                 <!-- right_bar-main -->
