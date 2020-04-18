@@ -5,3 +5,4 @@ asker/*/__pycache__/*
 asker/__pycache__/*
 CrazyAsker/__pycache__/*
 media/*
+asker/management/commands/__pycache__/*
