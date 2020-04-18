@@ -19,6 +19,7 @@ class Command(BaseCommand):
         fake = Faker()
         index = 0
         count = options['count']
+        bulk_list = []
         user_ids = User.objects.values_list('id', flat=True)
         question_ids = Question.manager.values_list('question_id', flat=True)
         answer_ids = Answer.objects.values_list('answer_id', flat=True)

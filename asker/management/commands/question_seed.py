@@ -17,11 +17,11 @@ class Command(BaseCommand):
         fake = Faker()
         index = 0
         count = options['count']
+        user_ids = User.objects.values_list('id', flat=True)
         while index < count:
             if not (index % self.get_10_procent(count)):
                 print("Done {}%".format(10 * index // self.get_10_procent(count)))
 
-            user_ids = User.objects.values_list('id', flat=True)
             question = Question(
                 title=fake.sentence(nb_words=6, variable_nb_words=True, ext_word_list=None),
                 text=fake.text(max_nb_chars=200, ext_word_list=None),
