@@ -6,7 +6,7 @@ from django.utils import timezone
 from datetime import timedelta
 
 from .LikeDislike import LikeDislike
-from .User import User
+from .Profile import User
 
 
 class QuestionManager(models.Manager):

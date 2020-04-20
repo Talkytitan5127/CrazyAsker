@@ -3,7 +3,7 @@ from django.db.models import Sum
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
-from .User import User
+from .Profile import User
 
 
 class LikeDislikeManager(models.Manager):

@@ -4,7 +4,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 from .Question import Question
 from .LikeDislike import LikeDislike
-from .User import User
+from .Profile import User
 
 
 class Answer(models.Model):
