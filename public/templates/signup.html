@@ -8,46 +8,72 @@
     </head>
     <body class="text-center register-body">
         <form class="form-register" method="post">
+            {% csrf_token %}
             <h1 class="m-4">Registration</h1>
+            {% for message in messages %}
+                <div class="text-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="text-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
             <div class="border border-primary">
                 <div class="form-group row">
-                    <label for="login" class="col-sm-4 col-form-label mt-4">Login</label>
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                            {% endfor %}
+                    {% endif %}
+                    <label for="{{ form.username.username_for_label }}" class="col-sm-4 col-form-label mt-3">Username</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control col-sm-6 mt-4" placeholder="qwerty" id="login">
+                        {{ form.username }}
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="email" class="col-sm-4 col-form-label">Email</label>
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                            {% endfor %}
+                    {% endif %}
+                    <label for="{{ form.email.email_for_label }}" class="col-sm-4 col-form-label mt-3">Email</label>
                     <div class="col-sm-8">
-                        <input type="email" class="form-control col-sm-6" placeholder="example@dom.com" id="email">
+                        {{ form.email}}
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="username" class="col-sm-4 col-form-label">Username</label>
+                    <label for="{{ form.first_name.first_name_for_label }}" class="col-sm-4 col-form-label mt-3">First Name</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control col-sm-6" placeholder="Alan" id="username">
+                        {{ form.first_name}}
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="password" class="col-sm-4 col-form-label">Password</label>
+                    <label for="{{ form.last_name.last_name_for_label }}" class="col-sm-4 col-form-label mt-3">Second Name</label>
                     <div class="col-sm-8">
-                        <input type="password" class="form-control col-sm-6" id="password">
+                        {{ form.last_name }}
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="repeat_password" class="col-sm-4 col-form-label mb-4">Repeat password</label>
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                            <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                            {% endfor %}
+                    {% endif %}
+                    <label for="{{ form.password1.password1_for_label }}" class="col-sm-4 col-form-label mt-3">Password</label>
                     <div class="col-sm-8">
-                        <input type="password" class="form-control col-sm-6 mb-4" id="repeat_password">
+                        {{ form.password1 }}
                     </div>
                 </div>
-
                 <div class="form-group row">
-                    <label for="repeat_password" class="col-sm-4 col-form-label mb-4">Avatar</label>
-                    <div class="custom-file w-50 col-sm-8">
-                        <div class="col-sm-6">
-                            <input type="file" class="custom-file-input" id="customFile">
-                            <label class="custom-file-label text-left" for="customFile">Choose file</label>
-                        </div>
+                    <label for="{{ form.password2.password2_for_label }}" class="col-sm-4 col-form-label mb-3 mt-3">Repeat password</label>
+                    <div class="col-sm-8">
+                        {{ form.password2 }}
                     </div>
                 </div>
             </div>

@@ -7,12 +7,37 @@
         <link rel="stylesheet" href="{% static 'css/login.css' %}">
     </head>
     <body class="text-center login-body">
-        <form class="form-signin">
+        <form class="form-signin" method="post">
+            {% csrf_token %}
             <h1 class="mb-3">Log In</h1>
-            <label for="inputEmail" class="sr-only"></label>
-            <input type="email" id="inputEmail" class="form-control mb-3" placeholder="email address" required autofocus>
-            <label for="inputPassword" class="sr-only"></label>
-            <input type="password" id="inputPassword" class="form-control mb-3" placeholder="password" required>
+            {% for message in messages %}
+                <div class="text-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in form.errors %}
+                <div class="text-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+            {% endif %}
+
+            <label for="{{ form.username.username_for_label }}" class="sr-only" ></label>
+            {{ form.username }}
+
+            {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+            {% endif %}
+
+            <label for="{{ form.password.password_for_label }}" class="sr-only"></label>
+            {{ form.password }}
+
             <div class="checkbox mb-3">
                 <label>
                   <input type="checkbox" value="remember-me"> Remember me

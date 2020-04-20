@@ -1,5 +1,5 @@
 {%  load static %}
-{% if user.is_authorized %}
+{% if user.is_authenticated %}
     <div class="rounded-circle avatar mx-auto">
         <img src="{% static 'img/face.svg'  %}" alt="Avatar">
     </div>
@@ -11,14 +11,14 @@
                     <i class="fa fa-user"></i> Profile </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-cyan" aria-labelledby="navbarDropdownMenuLink-4">
                     <a class="dropdown-item" href="{% url 'settings' %}">My account</a>
-                    <a class="dropdown-item" href="#">Log out</a>
+                    <a class="dropdown-item" href="{% url 'signout' %}">Log out</a>
                 </div>
             </div>
         </div>
     </div>
 {% else %}
 <div class="row">
-	<a class="btn btn-primary mr-3" href="{% url 'login' %}">Login</a>
+	<a class="btn btn-primary mr-3" href="{% url 'signin' %}">Login</a>
 	<a class="btn btn-primary" href="{% url 'signup' %}">Sign Up</a>
 </div>
 
