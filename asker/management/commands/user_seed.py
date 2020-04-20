@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand
 
-from asker.models import User
+from django.contrib.auth.models import User
 
 from faker import Faker
+
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
@@ -24,12 +25,14 @@ class Command(BaseCommand):
 
             username = profile['username']
             if username not in uniq:
-                user = User(
+                user = User.objects.create_user(
                     username=username,
                     password=profile['mail'],
                     email=profile['mail']
                 )
-                user.save()
+
+                user.profile_set.create()
+
                 uniq.add(username)
                 index += 1
 

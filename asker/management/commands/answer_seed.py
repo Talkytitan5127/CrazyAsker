@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
 
-from asker.models import User, Question, Answer
+from asker.models import Question, Answer
 from random import choice, randint
 
 from faker import Faker
