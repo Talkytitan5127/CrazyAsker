@@ -1,22 +1,24 @@
 from datetime import datetime
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 
-from .models import Question, Tag, User
+from .models import Question, Tag, Profile
+from .forms import LoginForm, SignupForm
 
 
 def index(request):
-    questions = Question.manager.order_by('-updated_at').all()
+    questions = Question.manager.order_by('-updated_at')
     page_obj = paginate(questions, request, 20)
     return render(request, 'index.html',
                   {
                       'page_obj': page_obj,
-                      'popular_tags': Tag.manager.popular_tags,
-                      'popular_users': User.manager.popular_users,
-                      'user': {
-                          'is_authorized': False,
-                      }
+                      #'popular_tags': Tag.manager.popular_tags,
+                      #'popular_users': User.manager.popular_users,
                   })
 
 
@@ -76,15 +78,60 @@ def ask(request):
     return render(request, 'ask.html')
 
 
-def login(request):
-    return render(request, 'login.html')
+def signin(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = authenticate(username=data['username'], password=data['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('index')
+                else:
+                    messages.error(request, 'deactivated user')
+                    return redirect('login')
+            else:
+                messages.error(request, 'username or password not correct')
+                return redirect('login')
+    else:
+        form = LoginForm()
+
+        return render(request, 'login.html', {'form': form})
+
+
+def signout(request):
+    logout(request)
+    return redirect('index')
 
 
 def signup(request):
-    return render(request, 'signup.html')
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = form.save()
+            user.first_name = data.get('first_name')
+            user.last_name = data.get('last_name')
+            user.email = data.get('email')
+            user.save()
+
+            username = data.get('username')
+            password = data.get('password1')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+            else:
+                messages.error(request, 'Smth wrong with user')
+    else:
+        form = SignupForm()
+    return render(request, 'signup.html', {'form': form})
+
 
 def one_quest(request):
     return render(request, 'primitives/one_question.html')
+
 
 def settings(request):
     return render(request, 'settings.html')
