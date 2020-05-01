@@ -65,9 +65,71 @@
             </div>
         </footer>
         <!-- js -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+            function csrfSafeMethod(method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            }
+
+            // like dislike functions
+            $('.vote-inc').click(function() {
+                var csrftoken = getCookie('csrftoken');
+                var rating = this.parentNode;
+                var object_id = rating.dataset['object'];
+                var content_type = rating.dataset['type'];
+                $.ajax({
+                    beforeSend: function(xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    },
+
+                    url: '{% url 'add_like' %}',
+                    data: {
+                        'object': object_id,
+                        'content': content_type,
+                    },
+                    type: 'POST',
+                    success: function(json) {
+                        let rating_obj = document.getElementById('rating-'+object_id);
+                        if (json['rating'] == null) {
+                            return;
+                        }
+                        rating_obj.innerText = json['rating'];
+                    },
+
+                    error: function(json) {
+                        console.log(json);
+                        console.log('failed');
+                    },
+                });
+            });
+
+            $('#vote-dec').click(function() {
+                alert('World');
+            });
+        });
+    </script>
     {% block js %}
     {% endblock %}
     </body>

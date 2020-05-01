@@ -15,17 +15,13 @@
     </div>
     <div class="row" id="bottom-row">
         <div class="col-3">
-            <div class="text-center row p-2">
-                <button class="vote-btn dec col-sm-4 col-lg-4 p-0" data-toggle="tooltip">
-                    <svg class="bi bi-chevron-left rating" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M13.354 3.646a.5.5 0 010 .708L7.707 10l5.647 5.646a.5.5 0 01-.708.708l-6-6a.5.5 0 010-.708l6-6a.5.5 0 01.708 0z" clip-rule="evenodd"></path>
-                    </svg>
+            <div class="text-center row p-2" id="rating-control" data-object="{{ question.question_id }}" data-type="question">
+                <button class="vote-btn vote-inc col-sm-4 col-lg-4 p-0" id="vote-inc" data-toggle="tooltip">
+                    <img class="rating" src="{% static "img/left-arrow.svg" %}" alt="left-arrow">
                 </button>
-                <span class="col-sm-4 p-1">{{ question.rating }}</span>
-                <button class="vote-btn inc col-sm-4 col-lg-4 p-0" data-toggle="tooltip">
-                    <svg class="bi bi-chevron-right rating" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z" clip-rule="evenodd"></path>
-                    </svg>
+                <span class="col-sm-4 p-1" id="rating-{{ question.question_id }}">{{ question.rating }}</span>
+                <button class="vote-btn vote-dec col-sm-4 col-lg-4 p-0" id="vote-dec" data-toggle="tooltip">
+                    <img class="rating" src="{% static "img/right-arrow.svg" %}" alt="right-arrow">
                 </button>
             </div>
         </div>
@@ -52,9 +48,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
-</script>
