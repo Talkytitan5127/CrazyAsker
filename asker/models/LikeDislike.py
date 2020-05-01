@@ -36,4 +36,6 @@ class LikeDislike(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
 
+    unique_together = ['object_id', 'vote', 'author']
+
     objects = LikeDislikeManager()
