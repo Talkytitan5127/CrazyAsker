@@ -2,23 +2,25 @@
 
 {% block content %}
 	<div class="container">
+    <form method="post">
+        {% csrf_token %}
 		<h2>Задайте Вопрос</h2>
 		<div class="form-group row">
-			<label class="col-sm-2 col-form-label" for="title">Title</label>
+			<label class="col-sm-2 col-form-label" for="{{ form.title.title_for_label }}">Title</label>
 			<div class="col-sm-10">
-				<input type="text" id="title" class="form-control">
+                {{ form.title }}
 			</div>
 		</div>
 		<div class="form-group row">
-			<label class="col-sm-2 col-form-label" for="text">Text</label>
+			<label class="col-sm-2 col-form-label" for="{{ form.text.text_for_label }}">Text</label>
 			<div class="col-sm-10 send-text">
-				<textarea type="text" id="text	" class="form-control align-baseline"></textarea>
+                {{ form.text }}
 			</div>
 		</div>
 		<div class="form-group row">
-			<label class="col-sm-2 col-form-label" for="tags">Tags</label>
+			<label class="col-sm-2 col-form-label" for="{{ form.tags.tags_for_label }}">Tags</label>
 			<div class="col-sm-10">
-				<input type="text" id="tags" class="form-control">
+				{{ form.tags }}
 			</div>
 		</div>
 		<div class="form-group row">
@@ -27,5 +29,6 @@
 				<button type="submit" class="btn btn-primary">Ask?</button>
 			</div>
 		</div>
+    </form>
 	</div>
 {% endblock %}

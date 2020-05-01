@@ -1,5 +1,7 @@
 {%  extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
     Settings
 {%  endblock %}
@@ -7,50 +9,75 @@
 {% block content %}
     <div class="text-center register-body">
         <form class="form-register" method="post">
+            {% csrf_token %}
             <h1 class="m-4">Settings</h1>
             <div class="border border-primary">
                 <div class="form-group row">
-                    <label for="username" class="col-sm-4 col-form-label mt-4">Username</label>
+                    <label for="{{ user_form.username.username_for_label }}" class="col-sm-4 col-form-label mt-3">Username</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control col-sm-6 mt-4" value="{{ user.username }}" id="username">
+                        {{ user_form.username }}
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="email" class="col-sm-4 col-form-label">Email</label>
+                    <label for="{{ user_form.email.email_for_label }}" class="col-sm-4 col-form-label mt-3">Email</label>
                     <div class="col-sm-8">
-                        <input type="email" class="form-control col-sm-6" value="{{ user.email }}" id="email">
+                        {{ user_form.email }}
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="firstname" class="col-sm-4 col-form-label">First name</label>
+                    <label for="{{ user_form.first_name.first_name_for_label }}" class="col-sm-4 col-form-label mt-3">First name</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control col-sm-6" value="{{ user.first_name }}" id="firstname">
+                        {{ user_form.first_name }}
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="password" class="col-sm-4 col-form-label">New password</label>
+                    <label for="{{ user_form.last_name.first_name_for_label }}" class="col-sm-4 col-form-label mt-3">Last name</label>
                     <div class="col-sm-8">
-                        <input type="password" class="form-control col-sm-6" id="password">
+                        {{ user_form.last_name }}
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="repeat_password" class="col-sm-4 col-form-label mb-4">Repeat password</label>
+                    <label for="{{ user_form.password1.password1_for_label }}" class="col-sm-4 col-form-label mt-3">New password</label>
                     <div class="col-sm-8">
-                        <input type="password" class="form-control col-sm-6 mb-4" id="repeat_password">
+                        {{ user_form.password1 }}
                     </div>
                 </div>
-
                 <div class="form-group row">
-                    <label for="repeat_password" class="col-sm-4 col-form-label mb-4">Avatar</label>
+                    <label for="{{  user_form.password2.password2_for_label }}" class="col-sm-4 col-form-label mt-3 mb-4">Repeat password</label>
                     <div class="col-sm-8">
-                        <div class="col-sm-6">
-                            <input type="file" class="custom-file-input" id="customFile">
-                            <label class="custom-file-label text-left" for="customFile">Choose file</label>
-                        </div>
+                        {{ user_form.password2 }}
                     </div>
                 </div>
             </div>
              <button class="btn btn-primary m-4" type="submit">Save!</button>
         </form>
     </div>
+
+
+    <div class="text-center change-avatar">
+        <h1 class="m-4">Change Avatar</h1>
+        <form class="form-register border border-primary" enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            <div class="form-group row mt-4">
+                <label for="form.avatar.avatar_for_label" class="col-sm-4 col-form-label">Avatar</label>
+                <div class="col-sm-8">
+                    <div class="col-sm-6">
+                        <label class="custom-file-label text-left" for="{{ profile_form.avatar.avatar_for_label }}">Choose file</label>
+                        {{ profile_form.avatar }}
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary m-4" type="submit">Save!</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('#customFile').change(function() {
+            var fileLabel = document.getElementsByClassName('custom-file-label')[0];
+            fileLabel.innerText = this.files[0].name;
+        })
+    </script>
 {% endblock %}

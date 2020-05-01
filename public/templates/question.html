@@ -18,10 +18,12 @@
     </div>
     {% include 'primitives/pagination.html' %}
 	<div class="form-group send-text">
-        <label for="answer_input" class="col-form-label"></label>
         <h4>Напишите свой ответ</h4>
-        <textarea type="text" class="form-control mb-3" id="answer_input" placeholder="Enter your answer here..">
-        </textarea>
-		<button class="btn btn-primary">Answer</button>
+        <form method="post">
+            {% csrf_token %}
+            <label for="{{ form.text.text_for_label }}" class="col-form-label"></label>
+        {{ form.text }}
+		<button class="btn btn-primary" type="submit">Answer</button>
+        </form>
 	</div>
 {% endblock %}

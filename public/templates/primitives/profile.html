@@ -1,7 +1,7 @@
 {%  load static %}
 {% if user.is_authenticated %}
-    <div class="rounded-circle avatar mx-auto">
-        <img src="{% static 'img/face.svg'  %}" alt="Avatar">
+    <div class="rounded-circle bar-avatar mx-auto">
+            <img src="{{ MEDIA_URL }}{{ user.profile.avatar }}" alt="Avatar">
     </div>
     <div class="collapse navbar-collapse" id="navbarSuapportedContent-4">
         <div class="navbar-nav ml-auto">
