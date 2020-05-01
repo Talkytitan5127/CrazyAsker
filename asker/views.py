@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 
 from .models import Question, Tag, Profile
-from .forms import LoginForm, SignupForm
+from .forms import LoginForm, SignupForm, ProfileForm
+from .forms import QuestionForm, AnswerForm
 
 
 def index(request):
@@ -29,7 +30,7 @@ def new(request):
                   {
                       'page_obj': page_obj,
                       'popular_tags': Tag.manager.popular_tags,
-                      'popular_users': User.manager.popular_users,
+                      'popular_users': User.objects.popular_users,
                       'user': {
                           'is_authorized': False,
                       }
@@ -42,7 +43,7 @@ def hot(request):
                   {
                       'page_obj': page_obj,
                       'popular_tags': Tag.manager.popular_tags,
-                      'popular_users': User.manager.popular_users,
+                      'popular_users': User.objects.popular_users,
                       'user': {
                           'is_authorized': False,
                       }
@@ -58,7 +59,7 @@ def tag_filter(request, tag_name):
                       'page_obj': page_obj,
                       'search_tag': tag_name,
                       'popular_tags': Tag.manager.popular_tags,
-                      'popular_users': User.manager.popular_users,
+                      #'popular_users': User.objects.popular_users,
                   })
 
 
@@ -66,16 +67,31 @@ def question(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     answers = question.answer_set.all()
     page_obj = paginate(answers, request, 20)
+    if request.method == 'POST':
+        form = AnswerForm(request.user, question, request.POST)
+        if form.is_valid():
+            answer = form.save()
+            return redirect('question_index', question_id=question.question_id)
+    else:
+        form = AnswerForm(request.user, question)
     return render(request, 'question.html',
                   {
+                      'form': form,
                       'question': question,
                       'page_obj': page_obj,
                       'popular_tags': Tag.manager.popular_tags,
-                      'popular_users': User.manager.popular_users,
+                      #'popular_users': User.objects.popular_users,
                   })
 
 def ask(request):
-    return render(request, 'ask.html')
+    if request.method == 'POST':
+        form = QuestionForm(request.user, request.POST)
+        if form.is_valid():
+            question = form.save()
+            return redirect('question_index', question_id=question.question_id)
+    else:
+        form = QuestionForm(request.user)
+    return render(request, 'ask.html', {'form': form})
 
 
 def signin(request):
@@ -116,6 +132,9 @@ def signup(request):
             user.email = data.get('email')
             user.save()
 
+            profile = Profile(user=user)
+            profile.save()
+
             username = data.get('username')
             password = data.get('password1')
             user = authenticate(username=username, password=password)
@@ -134,7 +153,26 @@ def one_quest(request):
 
 
 def settings(request):
-    return render(request, 'settings.html')
+    if request.method == 'POST':
+        profile_form = ProfileForm(request.user, request.POST, request.FILES)
+        user_form = SignupForm(request.POST)
+        if 'avatar' in request.FILES and profile_form.is_valid():
+            profile_form.save()
+        else:
+            if user_form.is_valid():
+                user_data = user_form.cleaned_data
+                user = request.user
+                user.username = user_data['username']
+    else:
+        user = request.user
+        profile_form = ProfileForm(user)
+        user_form = SignupForm(initial={
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name
+        })
+    return render(request, 'settings.html', {'profile_form': profile_form, 'user_form': user_form})
 
 
 def paginate(objects_list, request, count_per_page):
