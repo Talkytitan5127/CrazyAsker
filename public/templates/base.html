@@ -93,6 +93,7 @@
 
             // like dislike functions
             $('.vote-inc').click(function() {
+                var heart = this;
                 var csrftoken = getCookie('csrftoken');
                 var rating = this.parentNode;
                 var object_id = rating.dataset['object'];
@@ -112,10 +113,13 @@
                     type: 'POST',
                     success: function(json) {
                         let rating_obj = document.getElementById('rating-'+object_id);
-                        if (json['rating'] == null) {
-                            return;
+                        let new_rating = parseInt(json['rating']);
+                        if (new_rating - parseInt(rating_obj.innerText) == 1) {
+                            heart.setAttribute('fill', 'blue');
+                        } else {
+                            heart.setAttribute('fill', 'black');
                         }
-                        rating_obj.innerText = json['rating'];
+                        rating_obj.innerText = new_rating;
                     },
 
                     error: function(json) {
@@ -123,6 +127,8 @@
                         console.log('failed');
                     },
                 });
+
+                console.log();
             });
 
             $('#vote-dec').click(function() {
