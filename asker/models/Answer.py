@@ -14,13 +14,14 @@ class Answer(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
+    rating = models.IntegerField(default=0)
 
     votes = GenericRelation(LikeDislike, related_query_name='answers')
 
     def __str__(self):
         return self.text
 
-    def rating(self):
+    def count_rating(self):
         return self.votes.likes().count() - self.votes.dislikes().count()
 
     def author_name(self):

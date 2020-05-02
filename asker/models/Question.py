@@ -25,13 +25,14 @@ class Question(models.Model):
     text = models.TextField()
     updated_at = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
 
     votes = GenericRelation(LikeDislike, related_query_name='questions')
 
-    manager = QuestionManager()
+    objects = QuestionManager()
 
     def __str__(self):
         return self.title
 
-    def rating(self):
+    def count_rating(self):
         return self.votes.likes().count() - self.votes.dislikes().count()

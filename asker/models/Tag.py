@@ -13,7 +13,7 @@ class Tag(models.Model):
     title = models.CharField(max_length=64, unique=True)
     questions = models.ManyToManyField(Question, related_name='tags')
 
-    manager = TagManager()
+    objects = TagManager()
 
     def __str__(self):
         return self.title
