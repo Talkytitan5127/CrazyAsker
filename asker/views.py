@@ -1,35 +1,35 @@
-from datetime import datetime
+import json
 
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import JsonResponse
 
-from .models import Question, Tag, Profile
+from .models import Question, Tag, Profile, LikeDislike, Answer
 from .forms import LoginForm, SignupForm, ProfileForm
 from .forms import QuestionForm, AnswerForm
 
 
 def index(request):
-    questions = Question.manager.order_by('-updated_at')
+    questions = Question.objects.order_by('-updated_at')
     page_obj = paginate(questions, request, 20)
     return render(request, 'index.html',
                   {
                       'page_obj': page_obj,
-                      #'popular_tags': Tag.manager.popular_tags,
-                      #'popular_users': User.manager.popular_users,
+                      #'popular_tags': Tag.objects.popular_tags,
+                      #'popular_users': User.objects.popular_users,
                   })
 
 
 def new(request):
-    questions = Question.manager.new_today()
+    questions = Question.objects.new_today()
     page_obj = paginate(questions, request, 20)
     return render(request, 'index.html',
                   {
                       'page_obj': page_obj,
-                      'popular_tags': Tag.manager.popular_tags,
+                      'popular_tags': Tag.objects.popular_tags,
                       'popular_users': User.objects.popular_users,
                       'user': {
                           'is_authorized': False,
@@ -37,12 +37,12 @@ def new(request):
                   })
 
 def hot(request):
-    questions = Question.manager.hot_today()
+    questions = Question.objects.hot_today()
     page_obj = paginate(questions, request, 20)
     return render(request, 'index.html',
                   {
                       'page_obj': page_obj,
-                      'popular_tags': Tag.manager.popular_tags,
+                      'popular_tags': Tag.objects.popular_tags,
                       'popular_users': User.objects.popular_users,
                       'user': {
                           'is_authorized': False,
@@ -58,7 +58,7 @@ def tag_filter(request, tag_name):
                   {
                       'page_obj': page_obj,
                       'search_tag': tag_name,
-                      'popular_tags': Tag.manager.popular_tags,
+                      'popular_tags': Tag.objects.popular_tags,
                       #'popular_users': User.objects.popular_users,
                   })
 
@@ -79,7 +79,7 @@ def question(request, question_id):
                       'form': form,
                       'question': question,
                       'page_obj': page_obj,
-                      'popular_tags': Tag.manager.popular_tags,
+                      'popular_tags': Tag.objects.popular_tags,
                       #'popular_users': User.objects.popular_users,
                   })
 
@@ -184,3 +184,32 @@ def paginate(objects_list, request, count_per_page):
 
 def page_not_found(request, exception=None):
     return render(request, '404.html', status=404)
+
+
+def add_like(request):
+    user = request.user
+    if user is None:
+        return JsonResponse({'message': 'not authorized'}, status=401)
+
+    data = request.POST
+    object_id = data.get('object')
+    content = data.get('content')
+    object = None
+    if content == 'question':
+        object = get_object_or_404(Question, pk=object_id)
+    elif content == 'answer':
+        object = get_object_or_404(Answer, pk=object_id)
+    else:
+        return JsonResponse({'status': 'OK'}, status=200)
+
+    like = LikeDislike.objects.filter(object_id=object_id, vote=LikeDislike.LIKE, author=user).first()
+    if like is None:
+        object.votes.create(author_id=user.id, vote=LikeDislike.LIKE)
+        object.rating += 1
+        object.save()
+    else:
+        like.delete()
+        object.rating = object.count_rating()
+        object.save()
+
+    return JsonResponse({'rating': object.rating}, status=200)
