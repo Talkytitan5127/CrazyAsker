@@ -22,19 +22,21 @@ class Command(BaseCommand):
         count = options['count']
         bulk_list = []
         user_ids = User.objects.values_list('id', flat=True)
-        question_ids = Question.manager.values_list('question_id', flat=True)
+        question_ids = Question.objects.values_list('question_id', flat=True)
         answer_ids = Answer.objects.values_list('answer_id', flat=True)
         while index < count:
             if not (index % self.get_10_procent(count)):
                 print("Done {}%".format(10 * (index // self.get_10_procent(count))))
             q_or_a = randint(0, 1)
             if q_or_a:
-                question = Question.manager.get(pk=choice(question_ids))
+                question = Question.objects.get(pk=choice(question_ids))
                 question.votes.create(author_id=choice(user_ids), vote=choice(vote_type))
+                question._rating = question.count_rating()
                 index += 1
             else:
-                answer =  Answer.objects.get(pk=choice(answer_ids))
+                answer = Answer.objects.get(pk=choice(answer_ids))
                 answer.votes.create(author_id=choice(user_ids), vote=choice(vote_type))
+                answer._rating = answer.count_rating()
                 index += 1
 
 

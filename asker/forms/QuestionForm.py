@@ -5,7 +5,7 @@ from asker.models import Question, Tag
 class QuestionForm(forms.Form):
 
     tags = forms.ModelMultipleChoiceField(
-        Tag.manager,
+        Tag.objects,
         widget=forms.SelectMultiple(
             attrs={'class': 'form-control'}
         )

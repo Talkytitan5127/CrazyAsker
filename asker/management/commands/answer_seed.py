@@ -20,7 +20,7 @@ class Command(BaseCommand):
         bulk_list = []
         count = options['count']
         user_ids = User.objects.values_list('id', flat=True)
-        question_ids = Question.manager.values_list('question_id', flat=True)
+        question_ids = Question.objects.values_list('question_id', flat=True)
         while index < count:
             print(index)
             if not (index % self.get_10_procent(count)):

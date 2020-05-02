@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 tag = Tag(title=title)
                 tag.save()
 
-                question_ids = Question.manager.values_list('question_id', flat=True)
+                question_ids = Question.objects.values_list('question_id', flat=True)
                 choose_questions = choices(question_ids, k=count_tags_on_question)
 
                 tag.questions.add(*choose_questions)
