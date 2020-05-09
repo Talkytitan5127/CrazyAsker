@@ -21,6 +21,11 @@
         <h4>Напишите свой ответ</h4>
         <form method="post">
             {% csrf_token %}
+            {% if form.errors %}
+                {% for error in form.errors %}
+                    <li class="text-danger"><strong>{{ error|escape }}</strong></li>
+                    {% endfor %}
+            {% endif %}
             <label for="{{ form.text.text_for_label }}" class="col-form-label"></label>
         {{ form.text }}
 		<button class="btn btn-primary" type="submit">Answer</button>

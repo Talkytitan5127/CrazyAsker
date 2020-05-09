@@ -18,19 +18,20 @@
         </div>
         <div class="col-9"></div>
     </div>
-    <div class="row" id="bottom-row">
-    <div class="col-3">
-        <div class="text-center row p-2" id="rating-control" data-object="{{ answer.answer_id }}" data-type="answer">
-            <span class="col-sm-4"></span>
-            <svg class="bi bi-heart-fill vote-inc" width="32px" height="32px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" clip-rule="evenodd"/>
-            </svg>
-            <span class="col-sm-4" id="rating-{{ answer.answer_id }}">{{ answer.rating }}</span>
+    <div class="row rating-control" id="bottom-row">
+        <div class="col-3">
+            <div class="text-center row p-2" data-object="{{ answer.answer_id }}" data-type="answer">
+                <span class="col-sm-4"></span>
+                <svg class="bi bi-heart-fill vote-inc" width="32px" height="32px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" clip-rule="evenodd"/>
+                </svg>
+                <span class="col-sm-4" id="rating-{{ answer.answer_id }}">{{ answer.rating }}</span>
+            </div>
         </div>
-    </div>
         <div class="col-9 text-center">
-            <input type="checkbox" id="correct">
-            <label for="correct">Correct!</label>
+            <input type="checkbox" id="correct-{{ answer.answer_id }}" class="correct-checkbox" data-question="{{ question.question_id }}" data-answer="{{ answer.answer_id }}">
+            <label for="correct-{{ answer.answer_id }}">Correct!</label>
+            <h5 style="color: green; display: none" id="field-{{ answer.answer_id }}">Correct!</h5>
         </div>
     </div>
 </div>
