@@ -15,12 +15,10 @@ class Command(BaseCommand):
         return number // 10
 
     def handle(self, *args, **options):
-        vote_type = [1, -1]
         print("Seeding likes")
         fake = Faker()
         index = 0
         count = options['count']
-        bulk_list = []
         user_ids = User.objects.values_list('id', flat=True)
         question_ids = Question.objects.values_list('question_id', flat=True)
         answer_ids = Answer.objects.values_list('answer_id', flat=True)
@@ -30,13 +28,15 @@ class Command(BaseCommand):
             q_or_a = randint(0, 1)
             if q_or_a:
                 question = Question.objects.get(pk=choice(question_ids))
-                question.votes.create(author_id=choice(user_ids), vote=choice(vote_type))
-                question._rating = question.count_rating()
+                question.votes.create(author_id=choice(user_ids), vote=LikeDislike.LIKE)
+                question.rating += 1
+                question.save()
                 index += 1
             else:
                 answer = Answer.objects.get(pk=choice(answer_ids))
-                answer.votes.create(author_id=choice(user_ids), vote=choice(vote_type))
-                answer._rating = answer.count_rating()
+                answer.votes.create(author_id=choice(user_ids), vote=LikeDislike.LIKE)
+                answer.rating += 1
+                answer.save()
                 index += 1
 
 

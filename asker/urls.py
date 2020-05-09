@@ -15,4 +15,5 @@ urlpatterns = [
     path('one_question/', views.one_quest, name='one_question'),
     path('profile/edit', views.settings, name='settings'),
     path('api/add_like', views.add_like, name='add_like'),
+    path('api/correct_answer', views.correct_answer, name='correct_answer'),
 ]

@@ -162,7 +162,12 @@ def settings(request):
             if user_form.is_valid():
                 user_data = user_form.cleaned_data
                 user = request.user
-                user.username = user_data['username']
+                user.username = user_data.get('username', user.username)
+                user.set_password(user_data.get('password'))
+                user.first_name = user_data.get('first_name')
+                user.last_name = user_data.get('last_name')
+                user.email = user_data.get('email', user.email)
+                user.save()
     else:
         user = request.user
         profile_form = ProfileForm(user)
@@ -213,3 +218,23 @@ def add_like(request):
         object.save()
 
     return JsonResponse({'rating': object.rating}, status=200)
+
+
+def correct_answer(request):
+    user = request.user
+    if user is None:
+        return JsonResponse({'message': 'not authorized'}, status=401)
+
+    data = request.POST
+    question_id = data.get('question')
+    answer_id = data.get('answer')
+
+    question = get_object_or_404(Question, pk=question_id)
+    answer = get_object_or_404(Answer, pk=answer_id)
+    if question.author != user:
+        return JsonResponse({'message': 'this question not yours'}, status=403)
+
+    answer.is_correct = data['is_correct']
+    answer.save()
+
+    return JsonResponse({'correct': answer.is_correct}, status=200)

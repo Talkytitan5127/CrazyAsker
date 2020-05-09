@@ -36,3 +36,6 @@ class Question(models.Model):
 
     def count_rating(self):
         return self.votes.likes().count() - self.votes.dislikes().count()
+
+    def author_name(self):
+        return self.author.username
